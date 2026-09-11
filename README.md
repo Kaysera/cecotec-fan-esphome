@@ -76,8 +76,20 @@ ESPHome encuentra solo la carpeta `components/` de la raíz del repo.
 
 Esta configuración es **completa y se puede copiar tal cual**: incluye `wifi`,
 `api` y `ota`, sin los cuales el dispositivo no aparece en Home Assistant. Los
-valores sensibles van por `!secret`, que es una referencia a tu
-`secrets.yaml` y no contiene ninguna credencial.
+valores sensibles van por `!secret`, que es una referencia a tu `secrets.yaml`
+y no contiene ninguna credencial.
+
+Necesita estas cuatro claves en tu `secrets.yaml` (en el Device Builder es la
+pestaña **Secrets**):
+
+```yaml
+wifi_ssid: "TU_RED_WIFI"
+wifi_password: "TU_CONTRASENA_WIFI"
+ota_password: "la_que_quieras"
+# 32 bytes en base64. El Device Builder la genera sola al crear un dispositivo:
+#   openssl rand -base64 32
+api_encryption_key: "GENERA_LA_TUYA="
+```
 
 ```yaml
 esphome:
