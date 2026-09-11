@@ -66,11 +66,19 @@ ajustar los pines.
 
 ```yaml
 external_components:
-  - source: github://Kaysera/cecotec-fan-esphome
+  - source: github://Kaysera/cecotec-fan-esphome@v1.0.0
     components: [cecotec_ventilador]
 ```
 
 ESPHome encuentra solo la carpeta `components/` de la raíz del repo.
+
+> **Fija siempre una versión con `@`.** ESPHome **cachea** las fuentes de git y
+> por defecto solo las refresca una vez al día (`refresh: 1d`), asi que sin `@`
+> puedes quedarte compilando una copia vieja durante horas sin enterarte, y los
+> cambios del repo no te llegan. Como la clave de la caché incluye la
+> referencia, **cambiar el `@vX.Y.Z` fuerza una descarga limpia**. Para
+> actualizar, sube la versión aquí. Si prefieres ir siempre a la última, pon
+> `refresh: 0s` en la fuente, a costa de consultar GitHub en cada compilación.
 
 ### Configuración completa de ejemplo
 
@@ -101,7 +109,7 @@ esp32:
     type: esp-idf
 
 external_components:
-  - source: github://Kaysera/cecotec-fan-esphome
+  - source: github://Kaysera/cecotec-fan-esphome@v1.0.0
     components: [cecotec_ventilador]
 
 logger:
