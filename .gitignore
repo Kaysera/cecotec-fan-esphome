@@ -1,0 +1,15 @@
+# Este repo publica SOLO el componente de ESPHome y el README.
+#
+# Se ignora todo por defecto y se habilita lo justo, en vez de listar lo que
+# sobra: asi nada nuevo (capturas, logs, secretos, notas de trabajo) puede
+# colarse por olvido en un commit futuro.
+*
+
+!.gitignore
+!README.md
+!components/
+!components/**
+
+# Y dentro del componente, nada generado.
+__pycache__/
+*.pyc
