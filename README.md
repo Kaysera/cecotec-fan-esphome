@@ -74,8 +74,10 @@ ESPHome encuentra solo la carpeta `components/` de la raíz del repo.
 
 ### Configuración completa de ejemplo
 
-Rellena `wifi`, `api` y `ota` como en cualquier dispositivo ESPHome; aquí se
-omiten a propósito para no publicar credenciales.
+Esta configuración es **completa y se puede copiar tal cual**: incluye `wifi`,
+`api` y `ota`, sin los cuales el dispositivo no aparece en Home Assistant. Los
+valores sensibles van por `!secret`, que es una referencia a tu
+`secrets.yaml` y no contiene ninguna credencial.
 
 ```yaml
 esphome:
@@ -89,6 +91,25 @@ esp32:
 external_components:
   - source: github://Kaysera/cecotec-fan-esphome
     components: [cecotec_ventilador]
+
+logger:
+  # En la LilyGo T3-S3 el puerto serie es el USB-Serial/JTAG nativo del ESP32-S3.
+  hardware_uart: USB_SERIAL_JTAG
+
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  # El SX1280 emite en 2402 MHz y el WiFi esta en la misma banda y en la misma
+  # placa. Esto evita que la radio WiFi despierte en mitad de una rafaga.
+  power_save_mode: none
 
 spi:
   clk_pin: GPIO5
@@ -134,7 +155,7 @@ button:
 | Opción | Por defecto | Para qué |
 |---|---|---|
 | `cs_pin`, `busy_pin`, `reset_pin` | — | Pines del SX1280. |
-| `dry_run` | `false` | Si es `true`, las entidades funcionan y la trama se escribe en el log, **pero no sale nada por radio**. Útil para probar sin molestar. |
+| `dry_run` | `false` | Si es `true`, las entidades funcionan y la trama se escribe en el log, **pero no sale nada por radio**. Útil para depurar sin molestar a nadie. |
 | `use_bank` | `true` | Emitir las pulsaciones reales capturadas. Ponerlo a `false` genera la trama por campos, **y hoy el receptor la rechaza** (ver abajo). |
 | `frequency` | `2402MHz` | Canal. |
 | `power` | `13` | dBm. |

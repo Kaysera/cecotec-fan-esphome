@@ -37,10 +37,13 @@ CONFIG_SCHEMA = (
     cv.Schema(
         {
             cv.GenerateID(): cv.declare_id(CecotecHub),
-            # el modo de prueba: las entidades existen y logean la trama que
-            # emitirian, sin tocar el bus ni sacar RF. Por defecto activo, para
-            # que un despiste no ponga a emitir una placa sin validar.
-            cv.Optional(CONF_DRY_RUN, default=True): cv.boolean,
+            # `false` por defecto: esto es un transmisor y lo normal es que
+            # transmita. Un `dry_run` activo por defecto seria una trampa,
+            # porque el dispositivo aparece entero en Home Assistant y responde
+            # a todo, pero no sale nada por la antena y el ventilador no se
+            # entera. Con `true` las entidades funcionan y la trama se escribe
+            # en el log, sin tocar el bus SPI.
+            cv.Optional(CONF_DRY_RUN, default=False): cv.boolean,
             cv.Optional(CONF_BUSY_PIN): pins.gpio_input_pin_schema,
             cv.Optional(CONF_RESET_PIN): pins.gpio_output_pin_schema,
             cv.Optional(CONF_FREQUENCY, default="2402MHz"): cv.All(
