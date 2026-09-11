@@ -206,6 +206,10 @@ void CecotecHub::log_frame_(const CecotecRequest &req, const uint8_t *a04, const
     sprintf(ha + 2 * i, "%02x", a04[i]);
     sprintf(hb + 2 * i, "%02x", b6d[i]);
   }
+  // Que quede MUY claro que no ha salido nada por la antena: este log solo
+  // ocurre en dry_run, y sin decirlo parece una emision normal. Es justo el
+  // fallo silencioso que hizo perder tiempo dos veces.
+  ESP_LOGW(TAG, "DRY RUN: la trama NO se emite. Quita `dry_run: true` del YAML.");
   if (req.cmd_index >= 0) {
     ESP_LOGI(TAG, "boton=%s (banco, pulsacion %u de %u) familia=0x%02X param=0x%04X",
              CECOTEC_COMMANDS[req.cmd_index].name, (unsigned) session,
